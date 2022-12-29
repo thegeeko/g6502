@@ -18,17 +18,11 @@ impl Mem {
   }
 
   pub fn read(&self, addr: Word) -> Byte {
-    if addr > 0x0000 && addr < 0xFFFF {
-      return self.data[addr as usize];
-    }
-
-    0x00
+    self.data[addr as usize]
   }
 
   pub fn write(&mut self, addr: Word, data: Byte) {
-    if addr > 0x0000 && addr < 0xFFFF {
-      self.data[addr as usize] = data;
-    }
+    self.data[addr as usize] = data;
   }
 
   pub fn load(&mut self, data: &[u8], offset: Word) {

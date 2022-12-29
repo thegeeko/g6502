@@ -13,7 +13,8 @@ struct vm {
 
 impl vm {
   fn new() -> Self {
-    Self { cpu: CPU::new() }
+    let mem = Mem::new();
+    Self { cpu: CPU::new(mem) }
   }
 
   fn reset(&mut self) {

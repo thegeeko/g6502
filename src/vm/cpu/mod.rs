@@ -65,7 +65,7 @@ pub struct CPU {
 }
 
 impl CPU {
-  pub fn new() -> Self {
+  pub fn new(mem: Mem) -> Self {
     let mut new = Self {
       pc: 0,
       sp: 0,
@@ -76,7 +76,7 @@ impl CPU {
 
       status: CpuStatus::default(),
       cycles: 0,
-      mem: Mem::new(),
+      mem,
 
       rel_working_addr: 0x0000,
       working_addr: 0x0000,
@@ -155,7 +155,8 @@ impl CPU {
     self.cycles = 8;
   }
 
-  pub fn rti (&mut self) {
+  pub fn rti(&mut self) {
+    // return from interrupt
     self.sp += 1;
     self.status.bits = self.mem.read(self.sp);
     self.status.clear_flag(CpuStatus::B);
@@ -171,7 +172,7 @@ impl CPU {
   }
 
   pub fn fill_working_data(&mut self) {
-    if !(self.curr_instruction.addr_mode == ADDR_MODE::IMMEDIATE) {
+    if !(self.curr_instruction.addr_mode == ADDR_MODE::IMPLIED) {
       self.working_data = self.mem.read(self.working_addr);
     }
   }
@@ -189,5 +190,4 @@ impl CPU {
 
     (hi << 8) | lo
   }
-
 }

@@ -1150,7 +1150,7 @@ pub fn execute(cpu: &mut CPU, instruction: Instruction) -> u8 {
     _ => 0x00,
   };
 
-  match instruction.opr {
+  addi_cycles += match instruction.opr {
     OPS::ADC => adc(cpu),
     OPS::AND => and(cpu),
     OPS::ASL => asl(cpu),
